@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# print heloo school 10 times
+
+s=1
+for i in {1..10}; do
+	(s+=$i)
+	echo "Best School"
+done

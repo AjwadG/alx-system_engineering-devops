@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# endless loop and sleep
+
+function clean_up {
+	rm "/var/run/myscript.pid"
+	exit
+}
+function kill_message {
+    echo "I hate the kill command"
+	clean_up
+}
+function C_message {
+    echo "Y U no love me?!"
+}
+
+trap kill_message SIGTERM
+trap C_message SIGINT
+trap clean_up SIGQUIT
+
+echo $$ > "/var/run/myscript.pid"
+while true; do
+	echo "To infinity and beyond"
+	sleep "2"
+done

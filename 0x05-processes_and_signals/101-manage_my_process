@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# endless loop and sleep
+
+function start_m {
+	./manage_my_process &
+	echo "$!" > "/var/run/my_process.pid"
+	echo "manage_my_process started"
+}
+
+function stop_m {
+	proc="$(cat /var/run/my_process.pid)"
+	kill "$proc"
+	rm "/var/run/my_process.pid"
+	echo "manage_my_process stopped"
+}
+
+function restart_m {
+	proc="$(cat /var/run/my_process.pid)"
+	kill "$proc"
+	rm "/var/run/my_process.pid"
+	./manage_my_process &
+	echo "$!" > "/var/run/my_process.pid"
+	echo "manage_my_process restarted"
+}
+
+case $1 in
+	"start")
+		start_m
+		;;
+	"stop")
+		stop_m
+		;;
+	"restart")
+		restart_m
+		;;
+	*)
+		echo "Usage: manage_my_process {start|stop|restart}"
+		;;
+esac

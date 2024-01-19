@@ -12,7 +12,7 @@ package { 'Flask':
 
 # automating installition of Werkzeug 2.2.1
 package { 'Werkzeug':
-  ensure   => '2.0.2',
+  ensure   => '2.2.1',
   provider => 'pip3',
   require  => Package['python3-pip'],
 }

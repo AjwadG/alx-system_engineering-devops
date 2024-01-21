@@ -1,9 +1,13 @@
-# adding PasswordAuthentication no to servers config 
-exec { 'Turn off passwd auth':
-  command => '/usr/bin/echo "PasswordAuthentication no" >> /etc/ssh/sshd_config'
+# configer the server to not accpet pass auth
+file_line { 'Turn off passwd auth':
+  ensure => 'present',
+  path => '/etc/ssh/ssh_config',
+  line => 'PasswordAuthentication no',
 }
 
-# adding the public key to servers auth keys
-exec { 'Declare identity file':
-  command => '/usr/bin/cat ~/.ssh/school >> /root/.ssh/authorized_keys'
+# make the default identity file to shool if its not the case
+file_line { 'Declare identity file':
+  ensure => 'present',
+  path   => '/etc/ssh/ssh_config',
+  line   => 'IdentityFile ~/.ssh/school',
 }

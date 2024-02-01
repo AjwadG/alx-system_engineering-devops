@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Install and configerring nginx web server
-apt-get update
-at-get intall -y nginx
-sudo sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+# make nginx list to 80 it is be def
+# to avoid any erros link enabled to available
+# another way to include available insted of en in config
+sudo rm /etc/nginx/sites-enabled/default
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 sudo service nginx restart

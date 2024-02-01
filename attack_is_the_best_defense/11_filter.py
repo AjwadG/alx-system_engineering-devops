@@ -6,7 +6,6 @@ dest = "passords.txt" if len(argv) < 3 else argv[2]
 count = 0
 
 with open(argv[1]) as f:
-    f.decode('latin-1').encode("utf-8")
     lines = f.readlines()
     with open(dest, 'a+') as d:
         d.seek(0)

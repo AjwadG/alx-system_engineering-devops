@@ -1,8 +1,12 @@
 server {
+        # listen to http requests
         listen 80 default_server;
         listen [::]:80 default_server;
 
+        # add server and number header
         add_header X-Served-By 479067-web-01 always;
+
+        # declare the root of static pages
         root /var/www/html;
 
         # Add index.php to the list if you are using PHP
@@ -11,8 +15,10 @@ server {
         # all the possible server names or ip
         server_name web-01.ajwadg.tech localhost 100.26.215.136 www.ajwadg.tech;
 
+        # changing the eror 404 page
         error_page 404 /error_404.html;
 
+        # serveing the error 404 that we created
         location = /error_404.html {
                 root /var/www/html;
                 internal;
@@ -23,15 +29,22 @@ server {
                 proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
         }
 
-        # servers the odd or even page from a flask
+        # servers the odd or even page from a flask app
         location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
                 proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
+       }
+
+        # reidrect all sup uri to the flask server
+        location /api {
+                proxy_pass http://127.0.0.1:5002/api;
         }
 
+        # redirecting a path to another
         location /hbnb_static/ {
                 alias /data/web_static/current/;
         }
 
+        # redirecting to another page
         location /redirect_me {
                 return 301 https://www.nginx.com/blog/creating-nginx-rewrite-rules/;
         }

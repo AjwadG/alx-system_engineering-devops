@@ -8,7 +8,8 @@ server {
         # Add index.php to the list if you are using PHP
         index index.html index.htm index.nginx-debian.html;
 
-        server_name web-01.ajwadg.tech;
+        # all the possible server names or ip
+        server_name web-01.ajwadg.tech localhost 100.26.215.136 www.ajwadg.tech;
 
         error_page 404 /error_404.html;
 
@@ -16,6 +17,8 @@ server {
                 root /var/www/html;
                 internal;
         }
+
+        # servs static page from a flask app
         location = /airbnb-onepage/ {
                 proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
         }

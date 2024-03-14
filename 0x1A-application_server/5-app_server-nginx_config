@@ -1,43 +1,44 @@
 server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+        listen 80;
+        listen [::]:80;
 
-        add_header X-Served-By 479067-web-01 always;
+        server_name _;
 
-        server_name web-01.ajwadg.tech localhost 100.26.215.136 www.ajwadg.tech;
+        error_page 404 /404.html;
+        add_header X-Served-By 479067-web-01;
 
-        error_page 404 /error_404.html;
-
-        location = /error_404.html {
-                root /var/www/html;
-                internal;
+        location / {
+            proxy_pass http://127.0.0.1:5003/2-hbnb;
         }
 
-        location = /airbnb-onepage/ {
-                proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+        location /redirect_me {
+            return 301 http://www.github.com/ajwadg;
         }
 
-        location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
+        location /404 {
+            root /var/www/html;
+            internal;
+        }
+        location /hbnb_static/ {
+
+            alias /data/web_static/current/;
+
+            autoindex off;
+
+        }
+        location /airbnb-onepage/ {
+                proxy_pass http://127.0.0.1:5000/airbnb-onepage;
+        }
+
+        location ~ ^/airbnb-dynamic/number_odd_or_even/(\d+)$ {
                 proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
         }
 
         location /api {
-                proxy_pass http://127.0.0.1:5002/api;
-        }
-
-        location / {
-                proxy_pass http://127.0.0.1:5003/2-hbnb;
+                 proxy_pass http://127.0.0.1:5002/api;
         }
 
         location /static {
                 proxy_pass http://127.0.0.1:5003;
-        }
-
-        location /hbnb_static/ {
-                alias /data/web_static/current/;
-        }
-
-        location /redirect_me {
-                return 301 https://www.nginx.com/blog/creating-nginx-rewrite-rules/;
-        }
+         }
 }

@@ -4,7 +4,7 @@ server {
         listen [::]:80 default_server;
 
         # add server and number header
-        add_header X-Served-By 479067-web-01 always;
+        add_header X-Served-By 479067-web-01;
 
         # declare the root of static pages
         root /var/www/html;
@@ -13,7 +13,7 @@ server {
         index index.html index.htm index.nginx-debian.html;
 
         # all the possible server names or ip
-        server_name web-01.ajwadg.tech localhost 100.26.215.136 www.ajwadg.tech;
+        server_name _;
 
         # changing the eror 404 page
         error_page 404 /error_404.html;
@@ -30,7 +30,7 @@ server {
         }
 
         # servers the odd or even page from a flask app
-        location ~ /airbnb-dynamic/number_odd_or_even/(\d+)$ {
+        location ~ ^/airbnb-dynamic/number_odd_or_even/(\d+)$ {
                 proxy_pass http://127.0.0.1:5001/number_odd_or_even/$1;
        }
 
@@ -46,6 +46,6 @@ server {
 
         # redirecting to another page
         location /redirect_me {
-                return 301 https://www.nginx.com/blog/creating-nginx-rewrite-rules/;
+            return 301 http://www.github.com/AjwadG;
         }
 }

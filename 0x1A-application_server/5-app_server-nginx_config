@@ -4,7 +4,7 @@ server {
 
         add_header X-Served-By 479067-web-01 always;
 
-        server_name web-01.ajwadg.tech;
+        server_name web-01.ajwadg.tech localhost 100.26.215.136 www.ajwadg.tech;
 
         error_page 404 /error_404.html;
 
